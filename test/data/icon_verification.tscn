@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://18eerw58iunu"]
+[gd_scene load_steps=5 format=3 uid="uid://18eerw58iunu"]
 
 [ext_resource type="Script" uid="uid://p18uh7k56j1i" path="res://test/data/inherithed_from_with_icon_and_class_name.gd" id="1_135y6"]
 [ext_resource type="Script" uid="uid://c6mwiat2sg0j6" path="res://test/data/with_icon_and_class_name.gd" id="2_33cts"]
 [ext_resource type="Script" uid="uid://c3h3iuiuemofs" path="res://test/data/inherithed_and_override.gd" id="3_iarer"]
+[ext_resource type="Script" uid="uid://cc04v8ystxqy3" path="res://test/data/with_icon_trick_regex.gd" id="4_33cts"]
 
 [node name="IconVerification" type="Node"]
 
@@ -15,3 +16,6 @@ metadata/_custom_type_script = "uid://c6mwiat2sg0j6"
 
 [node name="Node" type="Node" parent="."]
 script = ExtResource("3_iarer")
+
+[node name="TrickyRegex" type="Node" parent="."]
+script = ExtResource("4_33cts")

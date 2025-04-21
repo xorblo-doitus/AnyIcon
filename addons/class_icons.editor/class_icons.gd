@@ -14,6 +14,13 @@ static var base_control: Control = EditorInterface.get_base_control()
 static var icon_not_found: Texture2D = base_control.get_theme_icon(&"")
 
 
+static var _ICON_ANNOTATION_REGEX = RegEx.create_from_string(
+	#r"""@icon\s*?\((?:.|\n)*?"(.*?)"(?:.|\n)*?\)"""
+	#r"""@icon\s*?\((?:.|\n)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)"""
+	r"""@icon\s*?\((?:[^#]*?(?:)*?(?:#.*)*?)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)"""
+)
+
+
 #static func _static_init() -> void:
 	#_deferred_static_init.call_deferred()
 #
@@ -58,7 +65,17 @@ static func get_script_icon(script: Script, fallback: StringName = &"") -> Textu
 		if current_script.get_global_name():
 			return get_class_icon(current_script.get_global_name(), fallback)
 		
-		# TODO MAYBE Read first line for @icon
+		var match_ := _ICON_ANNOTATION_REGEX.search(current_script.source_code)
+		#print(current_script.resource_path)
+		#print(current_script.source_code)
+		#prints("MATCH:" , match_.get_string())
+		#prints("PATH:" , match_.get_string("path"))
+		if match_ and match_.get_string("path"):
+			#print("FOUND")
+			#print(current_script.resource_path)
+			#print(match_)
+			#print(match_.get_string("path"))
+			return load(match_.get_string("path"))
 		
 		current_script = current_script.get_base_script()
 	
