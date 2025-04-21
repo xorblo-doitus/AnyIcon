@@ -12,16 +12,6 @@ static var results: Results
 func _run() -> void:
 	print("Testing...")
 	
-	#print(r"""@icon\s*?\((?:[^#]*?(?:)*?(?:#.*)*?)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)""")
-	#var match_ := RegEx.create_from_string(
-		#r"""@icon\s*?\((?:[^#]*?(?:)*?(?:#.*)*?)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)"""
-	#).search("@icon(\"res://\")")
-	#print(match_.get_string())
-	#prints(match_.get_start(), "to", match_.get_end())
-	#prints(match_.strings)
-	#prints(match_.get_string("path"))
-	#return
-	
 	results = Results.new()
 	
 	test_get_variant_icon()

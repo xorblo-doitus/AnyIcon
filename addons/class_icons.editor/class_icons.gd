@@ -2,7 +2,6 @@
 class_name ClassIcons
 extends Object
 
-
 ## A singleton providing easy access to icons representing class and types.
 ##
 ## Use [method get_variant_icon] for the highest abstraction.
@@ -15,20 +14,13 @@ static var icon_not_found: Texture2D = base_control.get_theme_icon(&"")
 
 
 static var _ICON_ANNOTATION_REGEX = RegEx.create_from_string(
-	#r"""@icon\s*?\((?:.|\n)*?"(.*?)"(?:.|\n)*?\)"""
-	#r"""@icon\s*?\((?:.|\n)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)"""
 	r"""@icon\s*?\((?:[^#]*?(?:)*?(?:#.*)*?)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)"""
 )
 
 
-#static func _static_init() -> void:
-	#_deferred_static_init.call_deferred()
-#
-#
-#static func _deferred_static_init() -> void:
-	#base_control = EditorInterface.get_base_control()
-	#icon_not_found = base_control.get_theme_icon(&"")
-
+## This static method returns the icon that represents the type of the passed value.
+## It works for everything: Builtin types and classes, custom classes with or
+## without class_name.
 static func get_variant_icon(variant: Variant, fallback: StringName = &"") -> Texture2D:
 	var type: Variant.Type = typeof(variant)
 	if type == TYPE_OBJECT:
@@ -44,19 +36,8 @@ static func get_object_icon(object: Object, fallback: StringName = &"") -> Textu
 	var script: Script = object.get_script()
 	if script:
 		return get_script_icon(script, fallback)
-		# I don't know what I had in mind while writing this duplicated code.
-		#var search_for: Script = script
-		#while true:
-			#for class_ in ProjectSettings.get_global_class_list():
-				#if class_["path"] == search_for.resource_path:
-					#return get_class_icon(class_["class"], fallback)
-			#if search_for.get_base_script():
-				#search_for = search_for.get_base_script()
-			#else:
-				#return get_builtin_class_icon(search_for.get_instance_base_type())
 	
 	return get_builtin_class_icon(object.get_class())
-
 
 
 static func get_script_icon(script: Script, fallback: StringName = &"") -> Texture2D:
@@ -66,21 +47,12 @@ static func get_script_icon(script: Script, fallback: StringName = &"") -> Textu
 			return get_class_icon(current_script.get_global_name(), fallback)
 		
 		var match_ := _ICON_ANNOTATION_REGEX.search(current_script.source_code)
-		#print(current_script.resource_path)
-		#print(current_script.source_code)
-		#prints("MATCH:" , match_.get_string())
-		#prints("PATH:" , match_.get_string("path"))
 		if match_ and match_.get_string("path"):
-			#print("FOUND")
-			#print(current_script.resource_path)
-			#print(match_)
-			#print(match_.get_string("path"))
 			return load(match_.get_string("path"))
 		
 		current_script = current_script.get_base_script()
 	
 	return get_builtin_class_icon(script.get_instance_base_type())
-	
 
 
 ## See also [method get_custom_class_icon], [method get_builtin_class_icon]
@@ -90,7 +62,6 @@ static func get_class_icon(name: StringName, fallback: StringName = &"") -> Text
 		return get_builtin_class_icon(name, fallback)
 	
 	return get_custom_class_icon(name, fallback)
-
 
 
 ## See also [method get_class_icon]
@@ -145,8 +116,6 @@ static func get_builtin_class_icon(class_name_: StringName, fallback: StringName
 	return result
 
 
-
-
 ## Like [method TypeAndClassIcons.get_icon], but returns the [param fallback]
 ## if no icon is found.
 static func try_get_icon(name: StringName, fallback: StringName, theme_type: StringName = &"EditorIcons") -> Texture2D:
@@ -156,11 +125,9 @@ static func try_get_icon(name: StringName, fallback: StringName, theme_type: Str
 	return result
 
 
-
 ## Returns an icon of the EditorTheme. See [method Control.get_theme_icon].
 static func get_icon(name: StringName, theme_type: StringName = &"EditorIcons") -> Texture2D:
 	return base_control.get_theme_icon(name, theme_type)
-
 
 
 func _init() -> void:
