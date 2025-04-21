@@ -61,7 +61,6 @@ func test_get_variant_icon() -> void:
 		PROJECT_ICON_2,
 		"inherited with class name override"
 	)
-	#others[""] = ClassIcons.get_script_icon(load("res://test/data/inherithed_and_override.gd"))
 
 
 func _test_from_script(variant: Variant, expected: StringName, msg: String = "") -> void:

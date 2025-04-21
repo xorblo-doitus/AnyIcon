@@ -117,7 +117,8 @@ static func get_type_icon(type: Variant.Type, fallback: StringName = &"") -> Tex
 ## See also [method get_class_icon]
 static func get_builtin_class_icon(class_name_: StringName, fallback: StringName = &"") -> Texture2D:
 	var result: Texture2D = get_icon(class_name_)
-	while result == icon_not_found and class_name_ != &"":
+	
+	while result == icon_not_found and ClassDB.class_exists(class_name_):
 		class_name_ = ClassDB.get_parent_class(class_name_)
 		result = get_icon(class_name_)
 	
