@@ -19,7 +19,7 @@ static var _ICON_ANNOTATION_REGEX = RegEx.create_from_string(
 
 
 ## This static method returns the icon that represents the type of the passed value.
-## It works for everything: Builtin types and classes, custom classes with or
+## It works for everything: Built-in types and classes, custom classes with or
 ## without class_name.
 static func get_variant_icon(variant: Variant, fallback: StringName = &"") -> Texture2D:
 	var type: Variant.Type = typeof(variant)
