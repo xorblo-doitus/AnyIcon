@@ -85,7 +85,7 @@ func _test_get_variant_icon(variant: Variant, expected: StringName, msg: String 
 
 
 func _test_get_variant_icon_with_icon(variant: Variant, expected: Texture2D, msg: String = "") -> void:
-	var icon: Texture2D = ClassIcons.get_variant_icon(variant)
+	var icon: Texture2D = AnyIcon.get_variant_icon(variant)
 	
 	if icon != expected:
 		printerr(msg + ": Expected " + str(expected) + " for " + str(variant))
@@ -99,7 +99,7 @@ func _test_get_variant_icon_with_icon(variant: Variant, expected: Texture2D, msg
 
 
 class Results extends Resource:
-	@export var not_found := ClassIcons.icon_not_found
+	@export var not_found := AnyIcon.icon_not_found
 	@export var error_icons: Array[Texture2D] = []
 	@export var success_icons: Array[Texture2D] = []
 	@export var others: Dictionary[String, Texture2D] = {}

@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Class Icons: type and class icons utility"
+config/name="AnyIcon: type and class icons utility"
 config/tags=PackedStringArray("addon")
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"

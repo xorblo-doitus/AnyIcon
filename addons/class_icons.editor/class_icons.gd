@@ -1,5 +1,5 @@
 @tool
-class_name ClassIcons
+class_name AnyIcon
 extends Object
 
 ## A singleton providing easy access to icons representing class and types.
@@ -116,7 +116,7 @@ static func get_builtin_class_icon(class_name_: StringName, fallback: StringName
 	return result
 
 
-## Like [method TypeAndClassIcons.get_icon], but returns the [param fallback]
+## Like [method TypeAndAnyIcon.get_icon], but returns the [param fallback]
 ## if no icon is found.
 static func try_get_icon(name: StringName, fallback: StringName, theme_type: StringName = &"EditorIcons") -> Texture2D:
 	var result: Texture2D = get_icon(name, theme_type)
@@ -131,5 +131,5 @@ static func get_icon(name: StringName, theme_type: StringName = &"EditorIcons") 
 
 
 func _init() -> void:
-	push_error("Can't instantiate TypeAndClassIcons. This class is a singleton.")
+	push_error("Can't instantiate TypeAndAnyIcon. This class is a singleton.")
 	free()
