@@ -1,5 +1,5 @@
 ########## Project specific ignores
-
+test/output/*
 
 
 ########## Other

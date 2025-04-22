@@ -1,6 +1,9 @@
 @tool
 extends EditorScript
 
+
+const Results = preload("res://test/unit/results.gd")
+
 const PROJECT_ICON = preload("res://icon.svg")
 const PROJECT_ICON_2 = preload("res://icon2.svg")
 
@@ -21,7 +24,10 @@ func _run() -> void:
 	else:
 		print("There were errors!")
 	
-	EditorInterface.get_inspector().edit(results)
+	if "edit" in EditorInterface.get_inspector():
+		EditorInterface.get_inspector().edit(results)
+	
+	ResourceSaver.save(results, "res://test/output/result.tres", ResourceSaver.FLAG_CHANGE_PATH)
 
 
 func test_get_variant_icon() -> void:
@@ -95,11 +101,3 @@ func _test_get_variant_icon_with_icon(variant: Variant, expected: Texture2D, msg
 	
 	if variant is Object and not variant is RefCounted:
 		variant.free()
-
-
-
-class Results extends Resource:
-	@export var not_found := AnyIcon.icon_not_found
-	@export var error_icons: Array[Texture2D] = []
-	@export var success_icons: Array[Texture2D] = []
-	@export var others: Dictionary[String, Texture2D] = {}
