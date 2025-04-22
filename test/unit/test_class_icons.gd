@@ -10,11 +10,16 @@ const PROJECT_ICON_2 = preload("res://icon2.svg")
 
 static var results: Results
 
+var null_object: Object
+var null_array: Array
+
 
 
 func _run() -> void:
 	print("Testing...")
 	
+	null_object = Object.new()
+	null_object.free()
 	results = Results.new()
 	
 	test_get_variant_icon()
@@ -34,6 +39,10 @@ func test_get_variant_icon() -> void:
 	_test_get_variant_icon(true, &"bool")
 	_test_get_variant_icon(0, &"int")
 	_test_get_variant_icon(0.0, &"float")
+	_test_get_variant_icon(null, &"Variant")
+	_test_get_variant_icon([], &"Array")
+	_test_get_variant_icon(null_object, &"Object")
+	_test_get_variant_icon(null_array, &"Array")
 	_test_get_variant_icon(Vector2i.ZERO, &"Vector2i")
 	_test_get_variant_icon(PackedColorArray(), &"PackedColorArray")
 	
@@ -99,5 +108,5 @@ func _test_get_variant_icon_with_icon(variant: Variant, expected: Texture2D, msg
 	else:
 		results.success_icons.append(icon)
 	
-	if variant is Object and not variant is RefCounted:
+	if is_instance_valid(variant) and variant is Object and not variant is RefCounted:
 		variant.free()

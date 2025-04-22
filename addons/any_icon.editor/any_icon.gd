@@ -13,7 +13,7 @@ static var base_control: Control = EditorInterface.get_base_control()
 static var icon_not_found: Texture2D = base_control.get_theme_icon(&"")
 
 
-static var _ICON_ANNOTATION_REGEX = RegEx.create_from_string(
+static var _ICON_ANNOTATION_REGEX := RegEx.create_from_string(
 	r"""@icon\s*?\((?:[^#]*?(?:)*?(?:#.*)*?)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)"""
 )
 
@@ -23,13 +23,20 @@ static var _ICON_ANNOTATION_REGEX = RegEx.create_from_string(
 ## without class_name.
 static func get_variant_icon(variant: Variant, fallback: StringName = &"") -> Texture2D:
 	var type: Variant.Type = typeof(variant)
+	
 	if type == TYPE_OBJECT:
-		return get_object_icon(variant, fallback)
+		if is_instance_valid(variant): # Need the check because of type hints
+			return get_object_icon(variant, fallback)
+		else:
+			return get_icon(&"Object")
 	
 	return get_type_icon(type, fallback)
 
 
 static func get_object_icon(object: Object, fallback: StringName = &"") -> Texture2D:
+	if object == null or not is_instance_valid(object):
+		return get_icon(&"Object")
+	
 	if object is Script:
 		return get_script_icon(object, fallback)
 	
@@ -66,7 +73,6 @@ static func get_class_icon(name: StringName, fallback: StringName = &"") -> Text
 
 ## See also [method get_class_icon]
 static func get_custom_class_icon(name: StringName, fallback: StringName = &"") -> Texture2D:
-	var base_name = name
 	var found: bool = true
 	var global_class_list := ProjectSettings.get_global_class_list()
 	
