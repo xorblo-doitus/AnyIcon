@@ -12,7 +12,7 @@ look up editor icons, you may want to use
 
 ## Features / How to use
 
-The main method provided by [AnyIcon](addons/class_icons.editor/class_icons.gd)
+The main method provided by [AnyIcon](addons/any_icon.editor/any_icon.gd)
 is `get_variant_icon(any_value: Variant)`. It's a static method that returns
 the icon associated with the passed value. It can handle any value, from built-in
 types (bool, int, Packed\*Array), to custom classes with `@icon("path")` specified.
@@ -37,7 +37,7 @@ You can download the addon:
 - On GitHub: `Code` → `Download ZIP`.
 - Through the editor: `AssetLib` → Search for "AnyIcon"
 
-You can exclude `*.editor/*` or `class_icons.editor/` from your export presets,
+You can exclude `*.editor/*` or `any_icon.editor/` from your export presets,
 because this addon is editor-only.
 
 
