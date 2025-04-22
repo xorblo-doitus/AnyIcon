@@ -49,9 +49,11 @@ I will soon use this utility in [TileSet Clipboard](https://github.com/xorblo-do
 
 ## Godot version
 
-Minimal Godot version: 4.4
+Godot version: 4.3+
 
-(Untested with previous versions)
+Note: In 4.3, there will be a few warnings at installation due to script UIDs that were introduced in 4.4.
+
+Won't work with 4.2 due to missing methods required by this addon.
 
 
 
