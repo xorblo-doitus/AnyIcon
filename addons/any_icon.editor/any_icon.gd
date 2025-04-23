@@ -179,6 +179,11 @@ static func get_icon(name: StringName, theme_type: StringName = &"EditorIcons") 
 	return base_control.get_theme_icon(name, theme_type)
 
 
+## Returns true if the passed [param icon] is not [member icon_not_found].
+static func is_valid(icon: Texture2D) -> bool:
+	return icon != icon_not_found
+
+
 func _init() -> void:
 	push_error("Can't instantiate TypeAndAnyIcon. This class is a singleton.")
 	free()
