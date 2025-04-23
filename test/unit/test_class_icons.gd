@@ -12,6 +12,8 @@ static var results: Results
 
 var null_object: Object
 var null_array: Array
+var with_icon_and_class_name: WithIconAndClassName
+var node_2d: Node2D
 
 
 
@@ -23,6 +25,7 @@ func _run() -> void:
 	results = Results.new()
 	
 	test_get_variant_icon()
+	test_get_property_icon()
 	
 	if results.error_icons.is_empty():
 		print("Success!")
@@ -78,6 +81,33 @@ func test_get_variant_icon() -> void:
 	)
 
 
+func test_get_property_icon() -> void:
+	var property_map: Dictionary
+	for property_dict in get_property_list():
+		property_map[property_dict["name"]] = property_dict
+	
+	_assert_same_texture(
+		AnyIcon.get_property_icon_from_dict(property_map["null_object"]),
+		_get_editor_icon(&"Object"),
+		"property/object",
+	)
+	_assert_same_texture(
+		AnyIcon.get_property_icon_from_dict(property_map["null_array"]),
+		_get_editor_icon(&"Array"),
+		"property/array",
+	)
+	_assert_same_texture(
+		AnyIcon.get_property_icon_from_dict(property_map["node_2d"]),
+		_get_editor_icon(&"Node2D"),
+		"property/node_2d",
+	)
+	_assert_same_texture(
+		AnyIcon.get_property_icon_from_dict(property_map["with_icon_and_class_name"]),
+		PROJECT_ICON,
+		"property/custom_class",
+	)
+
+
 func _test_from_script(variant: Variant, expected: StringName, msg: String = "") -> void:
 	_test_from_script_with_icon(
 		variant,
@@ -94,7 +124,7 @@ func _test_from_script_with_icon(variant: Variant, expected: Texture2D, msg: Str
 func _test_get_variant_icon(variant: Variant, expected: StringName, msg: String = "") -> void:
 	_test_get_variant_icon_with_icon(
 		variant,
-		EditorInterface.get_base_control().get_theme_icon(expected, &"EditorIcons"),
+		_get_editor_icon(expected),
 		msg
 	)
 
@@ -103,10 +133,23 @@ func _test_get_variant_icon_with_icon(variant: Variant, expected: Texture2D, msg
 	var icon: Texture2D = AnyIcon.get_variant_icon(variant)
 	
 	if icon != expected:
-		printerr(msg + ": Expected " + str(expected) + " for " + str(variant))
+		printerr(msg + ": Expected " + str(expected) + " for " + str(variant) + ", but got " + str(icon))
 		results.error_icons.append(icon)
 	else:
 		results.success_icons.append(icon)
 	
 	if is_instance_valid(variant) and variant is Object and not variant is RefCounted:
 		variant.free()
+
+
+func _assert_same_texture(got: Texture2D, expected: Texture2D, msg: String) -> void:
+	if got != expected:
+		print(msg + ": Expected " + str(expected) + ", but got " + str(got))
+		results.error_icons.append(got)
+	else:
+		results.success_icons.append(got)
+
+
+
+func _get_editor_icon(name: StringName) -> Texture2D:
+	return EditorInterface.get_base_control().get_theme_icon(name, &"EditorIcons")

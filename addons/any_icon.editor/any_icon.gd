@@ -33,6 +33,18 @@ static func get_variant_icon(variant: Variant, fallback: StringName = &"") -> Te
 	return get_type_icon(type, fallback)
 
 
+## Returns the icon of the type/class of a property.
+## [param property_dict] is one of the dictionary returned by
+## [method Object.get_property_list].
+static func get_property_icon_from_dict(property_dict: Dictionary, fallback: StringName = &"") -> Texture2D:
+	var type: Variant.Type = property_dict["type"]
+	
+	if type == TYPE_OBJECT:
+		return get_class_icon(property_dict["class_name"], fallback)
+	
+	return get_type_icon(type, fallback)
+
+
 static func get_object_icon(object: Object, fallback: StringName = &"") -> Texture2D:
 	if object == null or not is_instance_valid(object):
 		return get_icon(&"Object")
