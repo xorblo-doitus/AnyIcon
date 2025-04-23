@@ -140,10 +140,9 @@ static func get_custom_class_icon(name: StringName, fallback: StringName = &"") 
 	return get_icon(fallback)
 
 
-## [b]Note:[/b] Return the Variant icon for [constant @GlobalScope.TYPE_NIL].
 static func get_type_icon(type: Variant.Type, fallback: StringName = &"") -> Texture2D:
 	if type == TYPE_NIL:
-		return get_icon(&"Variant")
+		return get_icon(&"Nil")
 	
 	if 0 <= type and type < TYPE_MAX:
 		return  get_icon(type_string(type))

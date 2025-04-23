@@ -42,7 +42,7 @@ func test_get_variant_icon() -> void:
 	_test_get_variant_icon(true, &"bool")
 	_test_get_variant_icon(0, &"int")
 	_test_get_variant_icon(0.0, &"float")
-	_test_get_variant_icon(null, &"Variant")
+	_test_get_variant_icon(null, &"Nil")
 	_test_get_variant_icon([], &"Array")
 	_test_get_variant_icon(null_object, &"Object")
 	_test_get_variant_icon(null_array, &"Array")
