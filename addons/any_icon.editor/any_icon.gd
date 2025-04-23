@@ -33,9 +33,40 @@ static func get_variant_icon(variant: Variant, fallback: StringName = &"") -> Te
 	return get_type_icon(type, fallback)
 
 
+## Returns all the icon of properties with a matching [param usage_mask] as a dictionary
+## with property names as keys and [Texture2D]s as values.
+## [br][br][b]Note:[/b] See also [method get_property_icon] and [method get_property_icon_from_dict]
+## [br][br][b]Note:[/b] In Godot 4.4, you can enable the dictionary typing of this method by
+## commenting the actual typed declaration and uncommenting the typed ones in the addon
+## code.
+static func get_all_property_icons(object: Object, usage_mask: int = PROPERTY_USAGE_SCRIPT_VARIABLE) -> Dictionary:
+#static func get_all_property_icons(object: Object, usage_mask: int = PROPERTY_USAGE_SCRIPT_VARIABLE) -> Dictionary[StringName, Texture2D]:
+	#var result: Dictionary[StringName, Texture2D] = {}
+	var result: Dictionary = {}
+	
+	for property_dict in object.get_property_list():
+		if property_dict["usage"] & usage_mask:
+			result[property_dict["name"]] = get_property_icon_from_dict(property_dict)
+	
+	return result
+
+
+## Returns the icon of the type/class of a property on an object.
+## [br][br][b]Note:[/b] If you are getting the icon of all the properties on this object,
+## use [method get_all_property_icons] instead for better performances.
+static func get_property_icon(object: Object, property_name: StringName, fallback: StringName = &"") -> Texture2D:
+	for property_dict in object.get_property_list():
+		if property_dict["name"] == property_name:
+			return get_property_icon_from_dict(property_dict)
+	
+	return get_icon(fallback)
+
+
 ## Returns the icon of the type/class of a property.
 ## [param property_dict] is one of the dictionary returned by
 ## [method Object.get_property_list].
+## [br][br][b]Note:[/b] If you are getting the icon of all the properties on an object,
+## use [method get_all_property_icons] instead for better performances.
 static func get_property_icon_from_dict(property_dict: Dictionary, fallback: StringName = &"") -> Texture2D:
 	var type: Variant.Type = property_dict["type"]
 	

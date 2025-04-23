@@ -30,7 +30,7 @@ func _run() -> void:
 	if results.error_icons.is_empty():
 		print("Success!")
 	else:
-		print("There were errors!")
+		printerr("There were errors!")
 	
 	if "edit" in EditorInterface.get_inspector():
 		EditorInterface.get_inspector().edit(results)
@@ -106,6 +106,45 @@ func test_get_property_icon() -> void:
 		PROJECT_ICON,
 		"property/custom_class",
 	)
+	
+	_assert_same_texture(
+		AnyIcon.get_property_icon(self, "null_object"),
+		_get_editor_icon(&"Object"),
+		"property_fetching/object",
+	)
+	_assert_same_texture(
+		AnyIcon.get_property_icon(self, "null_array"),
+		_get_editor_icon(&"Array"),
+		"property_fetching/object",
+	)
+	_assert_same_texture(
+		AnyIcon.get_property_icon(self, "node_2d"),
+		_get_editor_icon(&"Node2D"),
+		"property_fetching/object",
+	)
+	_assert_same_texture(
+		AnyIcon.get_property_icon(self, "with_icon_and_class_name"),
+		PROJECT_ICON,
+		"property_fetching/object",
+	)
+	
+	#var expected: Dictionary[StringName, Texture2D] = {
+	var expected: Dictionary = {
+		&"null_object": _get_editor_icon(&"Object"),
+		&"null_array": _get_editor_icon(&"Array"),
+		&"node_2d": _get_editor_icon(&"Node2D"),
+		&"with_icon_and_class_name": PROJECT_ICON,
+	}
+	#var got: Dictionary[StringName, Texture2D] = AnyIcon.get_all_property_icons(self)
+	var got: Dictionary = AnyIcon.get_all_property_icons(self)
+	if got.size() != 4:
+		printerr("Wrong amount of propertu icons fetched.")
+	for name: StringName in got:
+		_assert_same_texture(
+			got[name],
+			expected.get(name, AnyIcon.icon_not_found),
+			"all_properties/" + name
+		)
 
 
 func _test_from_script(variant: Variant, expected: StringName, msg: String = "") -> void:
