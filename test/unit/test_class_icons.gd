@@ -27,6 +27,11 @@ func _run() -> void:
 	test_get_variant_icon()
 	test_get_property_icon()
 	
+	results.union = AnyIcon.get_property_icon_from_dict({
+		"type": TYPE_OBJECT,
+		"class_name": "CanvasItemMaterial,ShaderMaterial",
+	})
+	
 	if results.error_icons.is_empty():
 		print("Success!")
 	else:
