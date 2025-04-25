@@ -31,6 +31,9 @@ static var _ICON_ANNOTATION_REGEX := RegEx.create_from_string(
 	r"""@icon\s*?\((?:[^#]*?(?:)*?(?:#.*)*?)*?(?<delimiter>"+|'+)(?<path>.*?)\k<delimiter>(?:.|\n)*?\)"""
 )
 
+# static var _union_cache: Dictionary[String, ImageTexture] = {}
+static var _union_cache: Dictionary = {}
+
 
 ## This static method returns the icon that represents the type of the passed value.
 ## It works for everything: Built-in types and classes, custom classes with or
@@ -125,6 +128,9 @@ static func get_script_icon(script: Script, fallback: StringName = &"") -> Textu
 ## by concatenating thes icons from left to right.
 ## [br][br][b]Example:[/b] "CanvasItemMaterial,ShaderMaterial" 
 static func generate_union_class_icon(union_name: String, fallback: StringName = &"") -> ImageTexture:
+	if union_name in _union_cache:
+		return _union_cache[union_name]
+	
 	var image: Image = Image.create_empty(1, 1, true, Image.FORMAT_RGBA8)
 	
 	for name in union_name.split(","):
@@ -140,7 +146,8 @@ static func generate_union_class_icon(union_name: String, fallback: StringName =
 			Vector2i(add_at_x, 0),
 		)
 	
-	return ImageTexture.create_from_image(image)
+	_union_cache[union_name] = ImageTexture.create_from_image(image)
+	return _union_cache[union_name]
 
 
 ## See also [method get_custom_class_icon], [method get_builtin_class_icon]

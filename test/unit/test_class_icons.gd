@@ -7,6 +7,11 @@ const Results = preload("res://test/unit/results.gd")
 const PROJECT_ICON = preload("res://icon.svg")
 const PROJECT_ICON_2 = preload("res://icon2.svg")
 
+const CLASS_UNION = {
+	"type": TYPE_OBJECT,
+	"class_name": "CanvasItemMaterial,ShaderMaterial",
+}
+
 
 static var results: Results
 
@@ -27,10 +32,9 @@ func _run() -> void:
 	test_get_variant_icon()
 	test_get_property_icon()
 	
-	results.union = AnyIcon.get_property_icon_from_dict({
-		"type": TYPE_OBJECT,
-		"class_name": "CanvasItemMaterial,ShaderMaterial",
-	})
+	results.union = AnyIcon.get_property_icon_from_dict(CLASS_UNION)
+	if results.union != AnyIcon.get_property_icon_from_dict(CLASS_UNION):
+		printerr("Union caching doesn't work!")
 	
 	if results.error_icons.is_empty():
 		print("Success!")
