@@ -43,8 +43,10 @@ because this addon is editor-only.
 
 ## Examples
 
-I will soon use this utility in [TileSet Clipboard](https://github.com/xorblo-doitus/TileSet-Clipboard/) and [BBCodeEdit](https://github.com/xorblo-doitus/BBCodeEdit). (In fact, this addon is a refactor of a script from BBCodeEdit, so you can already look at how it's used here)
 
+Example use by the [TileSet Clipboard](https://godotengine.org/asset-library/asset/3889) addon:
+
+![Icons generated to show the type expected by properties](/.assets_for_readme/tileset_clipboard_example.png)
 
 
 ## Godot version
