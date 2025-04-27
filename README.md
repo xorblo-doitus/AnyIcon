@@ -1,1 +1,1 @@
-addons/class_icons.editor/README.md
+addons/any_icon.editor/README.md
