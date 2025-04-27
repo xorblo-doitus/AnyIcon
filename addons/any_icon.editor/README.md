@@ -40,6 +40,14 @@ You can download the addon:
 You can exclude `*.editor/*` or `any_icon.editor/` from your export presets,
 because this addon is editor-only.
 
+> [!WARNING]
+> If you ditribute an addon using this addon, don't forget to add it in your `.gitattributes`:
+> ```
+> /addons/any_icon.editor     !export-ignore
+> /addons/any_icon.editor/**  !export-ignore
+> ```
+
+
 
 ## Examples
 
