@@ -2,7 +2,7 @@
 class_name AnyIcon
 extends Object
 
-## A singleton providing easy access to icons representing classes and types.
+## A singleton providing easy access to icons representing classes and types, from values or members.
 ##
 ## Use [method get_variant_icon] for the highest abstraction when getting an icon by value.
 ## There are some methods related to preperty types too, such as [method get_property_icon_from_dict].
