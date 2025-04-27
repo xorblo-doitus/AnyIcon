@@ -47,6 +47,15 @@ you pass is a built-in type, a built-in class, or a custom class.
 
 
 
+### Type unions
+
+Some members expect type unions, such as "CanvasItemMaterial,ShaderMaterial"
+for `material` in CanvasItem.
+By default, this addon will generate icons by concatenating the icons in a row.
+You can disable this behavior by setting `AnyIcon.allow_generating_union_icons = false`.
+
+
+
 ## Installation
 
 You can download the addon:
