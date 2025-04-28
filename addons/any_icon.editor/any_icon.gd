@@ -18,7 +18,7 @@ static var allow_generating_union_icons: bool = true
 
 
 ## Shortcut for [method EditorInterface.get_base_control].
-static var base_control: Control = EditorInterface.get_base_control():
+static var base_control: Control = EditorInterface.get_base_control() if Engine.is_editor_hint() else Control.new():
 	set(new):
 		printerr("AnyIcon.base_control is read-only.")
 ## The icon displayed when no valid icon is found.
